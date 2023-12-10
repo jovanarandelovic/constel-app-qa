@@ -1,0 +1,14 @@
+{
+  "name": "constel-app-qa",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "cy:run"
+  },
+  "author": "Jovana Randelovic",
+  "license": "ISC",
+  "dependencies": {
+    "cypress": "12.4"
+  }
+}
