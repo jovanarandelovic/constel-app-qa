@@ -5,7 +5,6 @@ const loginPage = new LoginPage();
 describe("Log In functionality", () => {
   beforeEach(() => {
     cy.visit("");
-    //Used to prevent a cookie popup container
   });
 
   it("Should verify that the user is logged in when passing valid email and valid password", () => {
@@ -59,9 +58,5 @@ describe("Log In functionality", () => {
       Cypress.env("invalidCred").shortPassword
     );
     loginPage.confirmShortPasswordError();
-  });
-
-  afterEach(() => {
-    cy.clearAllCookies();
   });
 });

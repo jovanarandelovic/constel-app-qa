@@ -5,7 +5,7 @@ const homePage = new HomePage();
 const loginPage = new LoginPage();
 
 describe("Log Out functionality", () => {
-  beforeEach(() => {
+  before(() => {
     cy.visit("");
     loginPage.login(
       Cypress.env("validCred").email,
@@ -16,9 +16,5 @@ describe("Log Out functionality", () => {
   it("Should verify that the user is loggeded out ", () => {
     homePage.logout();
     cy.get(loginPage.LOGIN_BUTTON).should("be.visible");
-  });
-
-  afterEach(() => {
-    cy.clearAllCookies();
   });
 });
