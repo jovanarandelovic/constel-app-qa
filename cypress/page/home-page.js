@@ -10,12 +10,14 @@ export default class HomePage {
   DRAFT_RECORDING_LENGTH = ".vizualizerSection__time";
   POST_RECORDING_LENGTH = ".voice-visualizer__audio-info-container";
   PLAY_BUTTON_POST = ".voice-visualizer__btn-left";
-  LIKE_BUTTON_POST = '.button svg[data-icon="heart"]';
-  COMMENT_BUTTON = '.button svg[data-icon="comment"]';
+  LIKE_BUTTON_POST = 'svg[data-icon="heart"]';
+  COMMENT_BUTTON = 'svg[data-icon="comment"]';
   COMMENT_INPUT = '[placeholder="Write a comment"]';
   POST_COMMENT = '[data-icon="paper-plane"]';
   COMMENT_LIKE_BUTTON = '[aria-labelledby="postActionBtn"]';
   COMMENT_SEND_ICON = '[aria-labelledby="createInputSubmitBtn1"]';
+  COMMENTS = '[class="post__comments__list__comment__body"]';
+  DELETE_COMMENT = '[id="postDeleteBtn"]';
   POST_DATE = ".post__informations__timePosted";
   POST_CONTENT = ".post__description";
   POST_AUTHOR = ".user-details__username";
@@ -29,7 +31,7 @@ export default class HomePage {
     cy.get("@audio.all")
       .its("length")
       .then((numberOfRequests) => {
-        for (let i = 0; i <= numberOfRequests; i++) {
+        for (let i = 0; i < numberOfRequests; i++) {
           cy.intercept("GET", "**blob").as("audio");
           cy.wait(audio);
         }
@@ -38,16 +40,20 @@ export default class HomePage {
 
   createNewPost(postText) {
     cy.get(this.INPUT_POST).clear().type(postText);
+    cy.wait(1000);
     cy.get(this.NEW_POST_BUTTON).click();
   }
 
-  commentOwnPost() {}
+  commentPost(commentText) {
+    cy.get(this.COMMENT_BUTTON).first().click();
+    cy.get(this.COMMENT_INPUT).clear().type(commentText);
+    cy.wait(1000);
+    cy.get(this.COMMENT_SEND_ICON).click();
+  }
 
-  commentOthersPost() {}
-
-  likeOwnPost() {}
-
-  likeOthersPost() {}
+  likePost() {
+    cy.get(this.LIKE_BUTTON_POST).first().click();
+  }
 
   playAudio() {}
 
@@ -73,13 +79,21 @@ export default class HomePage {
     this.createNewPost(postText);
   }
 
-  confirmCommentCounter() {}
+  confirmLikeCounter() {
+    cy.get(this.LIKE_BUTTON_POST)
+      .first()
+      .parent()
+      .should("have.class", "btn-primary");
+  }
 
-  confirmLikeCounter() {}
+  confirmComment(commentText) {
+    cy.get(this.COMMENTS).first().should("have.text", commentText);
+  }
 
-  confirmComment() {}
-
-  deleteComment() {}
+  deleteComment() {
+    cy.get(this.DELETE_COMMENT).eq(0).last().click();
+    cy.wait(500);
+  }
 
   verifyPostDate() {}
 
@@ -101,7 +115,13 @@ export default class HomePage {
         .should("eq", recordingLength.replaceAll(".", ":"));
     });
   }
-  confirmCommentIsDeleted() {}
+  confirmCommentIsDeleted(commentText) {
+    cy.get(this.COMMENTS).eq(0).first().should("not.have.text", commentText);
+  }
+
+  confirmCommentIsDeletedOnNewPost() {
+    cy.get(this.COMMENTS).should("not.exist");
+  }
 
   verifyAudiosArePlaying() {
     const confirmAudioPlays = (audioIndex) => {
