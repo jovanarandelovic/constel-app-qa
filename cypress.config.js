@@ -6,8 +6,8 @@ module.exports = defineConfig({
   numTestKeptInMemory: 1,
   requestTimeout: 15000,
   responseTimeout: 15000,
-  viewportWidth: 768,
-  viewportHeight: 1000,
+  viewportHeight: 1920,
+  viewportWidth: 1440,
   e2e: {
     setupNodeEvents(on, config) {
       // implement node event listeners here
