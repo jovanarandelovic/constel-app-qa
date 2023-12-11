@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "cy:run"
+    "cy:open": "npx cypress open"
   },
   "author": "Jovana Randelovic",
   "license": "ISC",
