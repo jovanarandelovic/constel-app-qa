@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export default class HomePage {
   LOGOUT_BUTTON = '[id="email"]';
   INPUT_POST = 'input[placeholder="What\'s happening"]';
@@ -95,7 +97,11 @@ export default class HomePage {
     cy.wait(500);
   }
 
-  verifyPostDate() {}
+  verifyPostDate() {
+    cy.get(this.POST_DATE)
+      .first()
+      .should("have.text", `${moment().format("DD.MM.YYYY.")}`);
+  }
 
   verifyPostContent(postText) {
     cy.get(this.POST_CONTENT).first().invoke("text").should("eq", postText);

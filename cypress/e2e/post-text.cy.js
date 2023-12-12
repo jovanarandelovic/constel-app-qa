@@ -17,10 +17,11 @@ describe("Verifies that text was posted", () => {
     );
   });
 
-  it("Should post a status", () => {
+  it.only("Should post a status", () => {
     homePage.createNewPost(postText);
-    homePage.verifyPostContent(postText);
+    homePage.verifyPostDate();
     homePage.verifyPostAuthor(author);
+    homePage.verifyPostContent(postText);
   });
 
   it("should like a latest post", () => {
@@ -35,13 +36,13 @@ describe("Verifies that text was posted", () => {
 
   it("should delete a comment from existing post with comments", () => {
     homePage.commentPost(commentText + 1);
-    // homePage.confirmComment(commentText);
+    homePage.confirmComment(commentText + 1);
     homePage.deleteComment();
     homePage.confirmCommentIsDeleted(commentText + 1);
   });
 
-  it.skip("should delete a comment from a new post", () => {
-    homePage.createNewPost(postText);
+  it("should delete a comment from a new post", () => {
+    homePage.createNewPost(postText + 1);
     homePage.commentPost(commentText + 2);
     homePage.confirmComment(commentText + 2);
     homePage.deleteComment();
