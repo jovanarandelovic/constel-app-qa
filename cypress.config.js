@@ -13,5 +13,6 @@ module.exports = defineConfig({
       // implement node event listeners here
     },
     baseUrl: "https://constel-social-network.vercel.app/login",
+    experimentalRunAllSpecs: true,
   },
 });
