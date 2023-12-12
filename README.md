@@ -18,3 +18,6 @@ Cypress v12.4.0
 or
 
 `npx cypress open`
+
+Move example.cypress.env.json to the project root. 
+ Rename it to cypress.env.json and add your credentials
